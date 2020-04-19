@@ -8,9 +8,9 @@ router.get("/", (req, res) => {
 });
 
 router.get("/students", studentController.findAll)
-router.post("/students", studentController.add)
-router.get("/students/:id", studentController.findOne(id))
-router.put("/students/:id", studentController.updateOne(id))
-router.delete("/students/:id", studentController.removeOne(id))
+router.post("/students", studentController.addOne)
+router.get("/students/:id", studentController.findOne)
+router.put("/students/:id", studentController.updateOne)
+router.delete("/students/:id", studentController.removeOne)
 
 module.exports = router

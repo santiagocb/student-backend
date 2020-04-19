@@ -17,7 +17,12 @@ let addStudent = (req, res) => {
 let findAllStudents = (_, res) => {
     studentRepo
         .get()
-        .then(_ => { return res.send(res) })
+        .then(data => {
+            return res.send({
+                "data": data,
+                "length": data.length
+            });
+        })
         .catch(e => {
             console.log("Error al crear estudiante" + e);
             return res.send({"mensaje": "No fue posible encontrar la colección de estudiantes."});
@@ -27,7 +32,10 @@ let findAllStudents = (_, res) => {
 let findStudent = (req, res) => {
     studentRepo
         .find(req.params.id)
-        .then(_ => { return res.send(res) })
+        .then(data => {
+            if(!data) return res.status(404).send({"mensaje": "No fue posible encontrar el estudiante."});
+            return res.send({"data": data});
+        })
         .catch(e => {
             console.log("Error al crear estudiante" + e);
             return res.send({"mensaje": "No fue posible encontrar el estudiante."});
@@ -37,17 +45,10 @@ let findStudent = (req, res) => {
 let updateStudent = (req, res) => {
     studentRepo
         .update(req.params.id, req.body)
-        .then(_ => { return res.send({"mensaje": "La información del estudiante fue actualizado exitosamente"})})
-        .catch(e => {
-            console.log("Error al crear estudiante" + e);
-            return res.send({"mensaje": "No fue posible actualizar el estudiante."});
+        .then(data => {
+            if(!data) return res.status(200).send({"mensaje": "El usuario a actualizar no existe"});
+            return res.send({"mensaje": "La información del estudiante fue actualizado exitosamente"});
         })
-}
-
-let updateStudent = (req, res) => {
-    studentRepo
-        .update(req.params.id, req.body)
-        .then(_ => { return res.send({"mensaje": "La información del estudiante fue actualizado exitosamente"})})
         .catch(e => {
             console.log("Error al crear estudiante" + e);
             return res.send({"mensaje": "No fue posible actualizar el estudiante."});
@@ -56,7 +57,7 @@ let updateStudent = (req, res) => {
 
 let removeStudent = async (req, res) => {
     try {
-        var result = studentRepo.remove(req.params.id)
+        var result = await studentRepo.remove(req.params.id);
         return res.send({"mensaje": "La información del estudiante fue eliminada exitosamente"});
     } catch (error) {
         return res.send({"mensaje": "No fue posible eliminar la información del estudiante."})
@@ -64,7 +65,7 @@ let removeStudent = async (req, res) => {
 }
 
 module.exports = {
-    add: addStudent,
+    addOne: addStudent,
     findAll: findAllStudents,
     findOne: findStudent,
     updateOne: updateStudent,
