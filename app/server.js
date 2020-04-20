@@ -8,10 +8,10 @@ app.listen(config.APP_PORT, _ => {
 });
 
 mongoose
-  .connect('mongodb://root:example@localhost:27017/admin', {
+  .connect(`mongodb://${config.MONGO_USER}:${config.MONGO_PASS}@localhost:${config.MONGO_PORT}/${config.MONGO_DB}`, {
     useUnifiedTopology: true,
     useNewUrlParser: true })
   .then(_ => console.log('Conexión con mongo establecida'))
   .catch(e => console.log('Error al conectarse con mongo. Error: ' + e));
-  
+
 mongoose.set('useCreateIndex', true);

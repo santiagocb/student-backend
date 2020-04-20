@@ -16,4 +16,4 @@ router.delete("/students/:id", studentController.removeOne);
 router.get("/students/scores/means", studentController.calculateMeans);
 router.put("/students", studentController.updateMany);
 
-module.exports = router
+module.exports = router;

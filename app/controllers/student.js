@@ -88,7 +88,7 @@ let updateMany = async (req, res) => {
         return res.send({"data": "Información actualizada."});        
     } catch (error) {
         console.log(error);
-        return res.send({"mensaje": "No fue posible actualizar la información de los estudiantes de acuerdo a los filtros."})
+        return res.send({"mensaje": "No fue posible actualizar la información de los estudiantes de acuerdo a los filtros."});
     }
 }
 
