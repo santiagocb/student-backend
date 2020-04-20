@@ -93,6 +93,11 @@ Otros ejemplos:
 - /v1/students?professor=Carlos
 - /v1/students?id=103589659
 - /v1/students?professor=Carlos&name=Santiago
+El request body es semenjante a cuando se actualiza un usuario específico, es decir, cualquier atributo del modelo del estudiante.
+e.g
+{
+	"email": "test@udea.net"
+}
 
 ## 7. Entregar el promedio de las notas de todos los estudiantes de un curso
 Para obtener el promedio de notas de los estudiantes se debe consumir la ruta:
