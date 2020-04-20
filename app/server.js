@@ -13,3 +13,5 @@ mongoose
     useNewUrlParser: true })
   .then(_ => console.log('Conexión con mongo establecida'))
   .catch(e => console.log('Error al conectarse con mongo. Error: ' + e));
+  
+mongoose.set('useCreateIndex', true);

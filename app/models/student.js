@@ -13,10 +13,12 @@ const studentSchema = new Schema({
     name: {type: String},
     lastname: {type: String},
     email: {type: String},
+    professor: {type: String},
     summary: [
         {
             percentage: {type:Number},
-            score:{type: Number}
+            score:{type: Number},
+            _id: false
         }],
 });
 

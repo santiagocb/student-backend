@@ -21,10 +21,15 @@ let remove = (studentId) => {
     return studentModel.deleteOne({"id": studentId});
 }
 
+let updateMany = (filters, newInfo) => {
+    return studentModel.updateMany(filters, newInfo);
+}
+
 module.exports = {
     create: create,
     get: get,
     find: find,
     update: update,
-    remove: remove
+    remove: remove,
+    updateMany: updateMany
 };

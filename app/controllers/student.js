@@ -57,11 +57,47 @@ let updateStudent = (req, res) => {
 
 let removeStudent = async (req, res) => {
     try {
-        var result = await studentRepo.remove(req.params.id);
+        let result = await studentRepo.remove(req.params.id);
         return res.send({"mensaje": "La información del estudiante fue eliminada exitosamente"});
     } catch (error) {
         return res.send({"mensaje": "No fue posible eliminar la información del estudiante."})
     }
+}
+
+let calculateMeans = async (_, res) => {
+    try {
+        let infoStudents = await studentRepo.get();
+        var data = infoStudents.map(s => {
+            return {
+                "id": s.id,
+                "name": `${s.name} ${s.lastname}`,
+                "mean": calculateMean(s.summary)
+            };
+        });
+        return res.send({"data": data});        
+    } catch (error) {
+        console.log(error);
+        return res.send({"mensaje": "No fue posible calcular la media de los estudiantes."})
+    }
+}
+
+let updateMany = async (req, res) => {
+    try {
+        let queryParams = req.query;
+        var updated = await studentRepo.updateMany(queryParams, req.body);
+        return res.send({"data": "Información actualizada."});        
+    } catch (error) {
+        console.log(error);
+        return res.send({"mensaje": "No fue posible actualizar la información de los estudiantes de acuerdo a los filtros."})
+    }
+}
+
+function calculateMean(arrayScores) {
+    var result = 0.0;
+    arrayScores.forEach(element => {
+        result += (element.percentage/100) * element.score;
+    });
+    return result;
 }
 
 module.exports = {
@@ -69,5 +105,7 @@ module.exports = {
     findAll: findAllStudents,
     findOne: findStudent,
     updateOne: updateStudent,
-    removeOne: removeStudent
+    removeOne: removeStudent,
+    calculateMeans: calculateMeans,
+    updateMany: updateMany
 };
